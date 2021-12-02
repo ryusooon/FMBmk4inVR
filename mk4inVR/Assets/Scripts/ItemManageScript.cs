@@ -6,7 +6,9 @@ using UnityEngine;
 public class ItemManageScript : MonoBehaviour
 {
     [SerializeField] ManagerScript manager;
-    public bool checkItem_count { get; set;} = false;
+
+    public bool itemSound_shot { get; set; } = false; //獲得時に一度鳴らす
+    public bool checkItem_count { get; set; } = false;
     int itemA_count;
     int itemB_count;
     int itemC_count;
@@ -31,7 +33,7 @@ public class ItemManageScript : MonoBehaviour
     void Update()
     {
         // フィールドにある残りアイテム数を算出
-        if(checkItem_count == true)
+        if (checkItem_count == true)
         {
             itemA_count = GameObject.FindGameObjectsWithTag("ItemA").Length;
             manager.itemA_count = itemA_count;
@@ -40,12 +42,9 @@ public class ItemManageScript : MonoBehaviour
             itemC_count = GameObject.FindGameObjectsWithTag("ItemC").Length;
             manager.itemC_count = itemC_count;
 
+            itemSound_shot = true;
             checkItem_count = false;
         }
-
-        //if (itemA_count == 0) SendActiveObj(1);
-        //if (itemB_count == 0) SendActiveObj(2);
-        //if (itemC_count == 0) SendActiveObj(3);
 
     }
 
@@ -76,9 +75,9 @@ public class ItemManageScript : MonoBehaviour
 
 
         //}
-            
+
     }
-        
-    
+
+
 
 }
