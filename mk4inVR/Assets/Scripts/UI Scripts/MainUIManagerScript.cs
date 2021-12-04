@@ -9,6 +9,7 @@ public class MainUIManagerScript : MonoBehaviour
     [SerializeField] CanvasGroup Pausemanu;
     [SerializeField] CanvasGroup Soundmanu;
     [SerializeField] CanvasGroup Contllolmanu;
+    [SerializeField] CanvasGroup MainCanvas;
 
 
 
@@ -26,7 +27,8 @@ public class MainUIManagerScript : MonoBehaviour
         {
             Debug.Log("Pause押したよ");
             CanvasGroupOnOf(Pausemanu,true);
-            
+            CanvasGroupOnOf(MainCanvas, false);
+
         }
     }
 
@@ -34,6 +36,7 @@ public class MainUIManagerScript : MonoBehaviour
     {
 
         CanvasGroupOnOf(Pausemanu, false);
+        CanvasGroupOnOf(MainCanvas, true);
 
     }
 

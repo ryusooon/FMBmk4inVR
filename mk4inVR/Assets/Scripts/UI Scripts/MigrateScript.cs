@@ -11,7 +11,9 @@ public class MigrateScript : MonoBehaviour
     [SerializeField] CanvasGroup title;
     [SerializeField] CanvasGroup option;
     [SerializeField] CanvasGroup sound;
+    //[SerializeField] CanvasGroup MainC;
 
+    
     [SerializeField] GameObject RotePos;
     [SerializeField] Vector3 EffPos;
     [SerializeField] GameObject DisEff;
