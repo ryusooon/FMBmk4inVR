@@ -10,6 +10,9 @@ public class MainUIManagerScript : MonoBehaviour
     [SerializeField] CanvasGroup Soundmanu;
     [SerializeField] CanvasGroup Contllolmanu;
 
+
+
+
     // Start is called before the first frame update
     void Start()
     {
