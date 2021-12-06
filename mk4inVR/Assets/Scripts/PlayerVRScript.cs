@@ -1,12 +1,4 @@
-﻿/*
-【概要】
-VIVEコントローラで前後左右の移動と回転をするスクリプト
-
-左手：タッチパッドの入力で『上下左右』を判定し↑←↓→の移動をする
-右手：タッチパッドの入力で『左右』を判定し右回転と左回転をする
-*/
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -29,6 +21,7 @@ public class PlayerVRScript : MonoBehaviour
     // トリガー入力に使用する変数
     private SteamVR_Action_Boolean Trigger = SteamVR_Actions._default.InteractUI;
 
+    // 今回使用する各リジットボディー
     public static Rigidbody CameraRb { set; get; }
     [SerializeField] Rigidbody PlayerRb;
 
@@ -38,9 +31,9 @@ public class PlayerVRScript : MonoBehaviour
     public static float Axel;
     [SerializeField] float MoveSpeed = 15.0f;
 
+    //　ステータス用
     public float Dir_y = 0;
-    [SerializeField] GameObject gameManagerOb;
-    ManagerScript manager;
+    [SerializeField] ManagerScript manager;
 
     // Tracker関連の変数
     [SerializeField] VelocityEstimator TrackerVe;
@@ -53,7 +46,33 @@ public class PlayerVRScript : MonoBehaviour
     // 箒のオブジェクト
     [SerializeField] GameObject Broom;
 
-    float Xvec, Yvec, Zvec;
+
+
+    // 以下キー入力用変数
+    // 上下左右各キーの入力情報を格納する変数
+    private float v;
+    private float h;
+
+    // 回転時にしようする四次元の変数
+    private Quaternion Rota_right;
+    private Quaternion Rota_left;
+    private Quaternion Rota_up;
+    private Quaternion Rota_down;
+    private Quaternion Rota_p;
+
+    // 回転時にしようするステータスの変数
+    public static float RotateAngle;
+    public static float RotateSpeed;
+
+    public bool brake_on { get; set; } = false;
+
+    [SerializeField] float AnglSpeed = 20;
+    //[SerializeField] float MoveSpeed = 50;
+    
+    [SerializeField] GameObject gameMnagerOb;
+    [SerializeField] GameObject camera = null;
+    //ItemManageScript itemManager;
+
 
     private void Start()
     {
@@ -62,45 +81,153 @@ public class PlayerVRScript : MonoBehaviour
         PlayerVectMag = 0;
         Axel = 0.0f;
 
-        manager = gameManagerOb.gameObject.GetComponent<ManagerScript>();
-
-        //Vector = GetComponent<VelocityEstimator>();
+        //manager = gameManagerOb.gameObject.GetComponent<ManagerScript>();
 
         offsetRotation = Quaternion.Inverse(E.transform.rotation) * transform.rotation;
+
+        //itemManager = gameMnagerOb.GetComponent<ItemManageScript>();
+        PlayerRb = GetComponent<Rigidbody>();
+
+        // 各ステータスをセットアップ
+        RotateAngle = 45f;
+        RotateSpeed = 45f;
+        PlayerVectMag = 0;
+        Axel = 0.0f;
+
+        Vector3 worldAngle = transform.eulerAngles;
+        worldAngle.x = AnglSpeed;
+        worldAngle.y = AnglSpeed;
+        worldAngle.z = AnglSpeed;
     }
 
     void Update()
     {
+
         transform.rotation = E.transform.rotation * offsetRotation;
 
-        // コントローラーの加速度を各変数に代入
-        AbsoluVecX = ControllerVector.GetAngularVelocityEstimate().x;
-        AbsoluVecY = ControllerVector.GetAngularVelocityEstimate().y;
-        AbsoluVecZ = ControllerVector.GetAngularVelocityEstimate().z;
+        // VRモードオンの場合
+        if (manager.VR_mode)
+        {
 
-        // 加速度の値が負の場合、マイナスを掛けて絶対値にする
-        if (AbsoluVecX < 0.0f)
-        {
-            AbsoluVecX *= -1;
-        }
-        if (AbsoluVecY < 0.0f)
-        {
-            AbsoluVecY *= -1;
-        }
-        if (AbsoluVecZ < 0.0f)
-        {
-            AbsoluVecZ *= -1;
-        }
+            // コントローラーの加速度を各変数に代入
+            AbsoluVecX = ControllerVector.GetAngularVelocityEstimate().x;
+            AbsoluVecY = ControllerVector.GetAngularVelocityEstimate().y;
+            AbsoluVecZ = ControllerVector.GetAngularVelocityEstimate().z;
 
-        Debug.Log(" AbsoluVecX = " + AbsoluVecX + " AbsoluVecY = " + AbsoluVecY + " AbsoluVecZ = " + AbsoluVecZ);
+            // 加速度の値が負の場合、マイナスを掛けて絶対値にする
+            if (AbsoluVecX < 0.0f)
+            {
+                AbsoluVecX *= -1;
+            }
+            if (AbsoluVecY < 0.0f)
+            {
+                AbsoluVecY *= -1;
+            }
+            if (AbsoluVecZ < 0.0f)
+            {
+                AbsoluVecZ *= -1;
+            }
 
-        if (AbsoluVecX >= 1.0f && AbsoluVecZ >= 1.0f)
-        {
-            Stop();
+            //Debug.Log(" AbsoluVecX = " + AbsoluVecX + " AbsoluVecY = " + AbsoluVecY + " AbsoluVecZ = " + AbsoluVecZ);
+
+            if (AbsoluVecX >= 1.0f && AbsoluVecZ >= 1.0f)
+            {
+                Stop();
+            }
+            else
+            {
+                Move();
+            }
+
         }
-        else
+        else 
         {
-            Move();
+
+            // 各入力情報を更新
+            v = Input.GetAxis("Vertical");
+            h = Input.GetAxis("Horizontal");
+
+            // 各四次元の変数を更新
+            Rota_right = Quaternion.AngleAxis(2, Vector3.up * h);
+            Rota_left = Quaternion.AngleAxis(2, -Vector3.up * h);
+            Rota_up = Quaternion.AngleAxis(2, Vector3.left * v);
+            Rota_down = Quaternion.AngleAxis(2, -Vector3.left * v);
+            Rota_p = transform.rotation;
+
+            RotCamera();
+
+            if (manager.autoAccel_mode == true && manager.rise_flag == false)
+            {
+                Axel = MoveSpeed;
+            }
+            else if (!manager.autoAccel_mode && manager.rise_flag == false)
+            {
+                // Wキー(前進)関連の処理
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    Axel = MoveSpeed;
+                    PlayerRb.drag = 5;
+                }
+                else if (Input.GetKeyUp(KeyCode.Space))
+                {
+                    Axel = 0f;
+                    PlayerRb.drag = 3;
+                }
+            }
+
+
+            // Sキー(ブレーキ)関連の処理
+            if (Input.GetKey(KeyCode.M))
+            {
+                brake_on = true;
+                //Axel = 0.0f;
+            }
+            else /*if (Input.GetKeyUp(KeyCode.KeypadEnter))*/
+            {
+                brake_on = false;
+                //PlayerRb.drag = 3;
+            }
+
+            // WキーとSキーの入力が同時に行われた場合の処理
+            if (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.KeypadEnter))
+            {
+                Axel = MoveSpeed / 2;
+                PlayerRb.drag = 5;
+            }
+
+            // 左回りの処理
+            if (Input.GetKey(KeyCode.J))
+            {
+                //transform.rotation = rota_p * rota_left;
+                transform.Rotate(Vector3.down * RotateSpeed * Time.deltaTime, Space.World);
+            }
+
+            // 右回りの処理
+            if (Input.GetKey(KeyCode.L))
+            {
+                //transform.rotation = rota_p * rota_right;
+                transform.Rotate(Vector3.up * RotateSpeed * Time.deltaTime, Space.World);
+            }
+
+            // 目線を上に上げる
+            if (Input.GetKey(KeyCode.K))
+            {
+                // transform.rotation = rota_p * rota_up;
+                transform.Rotate(Vector3.right * RotateAngle * Time.deltaTime, Space.Self);
+            }
+
+            // 目線を下に下げる
+            if (Input.GetKey(KeyCode.I))
+            {
+                // transform.rotation = rota_p * rota_down;
+                transform.Rotate(-Vector3.right * RotateAngle * Time.deltaTime, Space.Self);
+            }
+
+
+            // 変更情報をプレイヤーに反映
+            // PlayerRb.AddForce(transform.forward * PlayerSpeed * Axel, ForceMode.Force);
+            // PlayerVectMag = Mathf.FloorToInt(PlayerRb.velocity.magnitude);
+
         }
 
     }
@@ -116,23 +243,11 @@ public class PlayerVRScript : MonoBehaviour
 
     }
 
-    void LateUpdate()
-    {
-
-    }
-
     private void Move()
     {
         Axel = MoveSpeed;
         CameraRb.drag = 1;
-        Debug.Log("PadOn");
-    }
-
-    private void HalfMove()
-    {
-        Axel = MoveSpeed / 2;
-        CameraRb.drag = 5;
-        Debug.Log("HalfOn");
+        Debug.Log("Move");
     }
 
     private void Stop()
@@ -142,62 +257,24 @@ public class PlayerVRScript : MonoBehaviour
         Debug.Log("StopNow");
     }
 
-    private void Brake()
+    //視線だけ操作
+    void RotCamera()
     {
-        Axel = 0.0f;
-        Debug.Log("TriggerOn");
-    }
 
-    private void Rotate()
-    {
-        // HMD(=カメラ)位置を中心として左右に回転する
-        // 左右の判定はCheckDirectionRight()で計算する
-        this.transform.RotateAround(_VRCamera.position, Vector3.up, _Rotspeed * CheckDirectionLeft());
-    }
-
-    private bool CheckGrabLeft()
-    {
-        return teleport.GetState(lefthandType);
-    }
-    private bool CheckGrabRight()
-    {
-        return teleport.GetState(righthandType);
-    }
-
-    private Vector3 CheckDirectionRight()
-    {
-        // タッチパッドのタッチ位置をVector2で取得
-        Vector2 dir = direction.GetAxis(righthandType);
-        Dir_y = dir.y;
-
-        //manager.Dir_y = Dir_y;
-
-        if (Mathf.Abs(dir.y) >= Mathf.Abs(dir.x))
+        if (Input.GetAxis("Horizontal") != 0)
         {
-            // Y方向の絶対値の方が大きければ、HMD(=カメラ)に対して前か後ろ方向を返す
-            return Mathf.Sign(dir.y) * Vector3.RotateTowards(new Vector3(0f, 0f, 1f), _VRCamera.forward, 360f, 360f);
+            camera.transform.Rotate(Vector3.up * h * RotateSpeed * Time.deltaTime, Space.World);
         }
-        else
-        {
-            // X方向の絶対値の方が大きければ、HMD(=カメラ)に対して右か左方向を返す
-            return Mathf.Sign(dir.x) * Vector3.RotateTowards(new Vector3(1f, 0f, 0f), _VRCamera.right, 360f, 360f);
-        }
-    }
 
-
-    private float CheckDirectionLeft()
-    {
-        // タッチパッドのタッチ位置をVector2で取得
-        Vector2 dir = direction.GetAxis(lefthandType);
-        if (Mathf.Abs(dir.y) >= Mathf.Abs(dir.x))
+        if (Input.GetAxis("Vertical") != 0)
         {
-            // Y方向の絶対値の方が大きければ、回転量=0を返す
-            return 0f;
+            camera.transform.Rotate(-Vector3.right * v * RotateAngle * Time.deltaTime, Space.Self);
         }
-        else
+
+        //カメラリセット
+        if (Input.GetKey(KeyCode.R))
         {
-            // X方向の絶対値の方が大きければ、回転量= 1か -1を返す
-            return Mathf.Sign(dir.x);
+            camera.transform.rotation = transform.rotation;
         }
     }
 
