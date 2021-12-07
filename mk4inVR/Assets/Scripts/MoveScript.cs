@@ -45,6 +45,9 @@ public class MoveScript : MonoBehaviour
 
     private string Pos;
 
+    [SerializeField] FinishAreaScript Finish;
+    [SerializeField] Transform Lpos1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -200,6 +203,12 @@ public class MoveScript : MonoBehaviour
                 //}
             }
         }
+
+        if (Finish.OnTriggerFin)
+        {
+            target = Lpos1;
+            move_speed = 100f;
+        }
         //DoAutoMovement();
     }
 
@@ -300,7 +309,15 @@ public class MoveScript : MonoBehaviour
             //  }
         }
 
+
+
         if (c.gameObject.tag == "StopArea") rb.velocity = transform.forward * 0;
+        if (c.gameObject.tag == "outagesPos")
+        {
+            rb.velocity = transform.forward * 0;
+            ActiveFlag = false;
+            move_speed = 0f;
+        }
 
     }
 

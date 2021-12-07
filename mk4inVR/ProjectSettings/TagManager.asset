@@ -19,6 +19,8 @@ TagManager:
   - FollowerC
   - Pos2
   - Pos3
+  - FinishArea
+  - outagesPos
   layers:
   - Default
   - TransparentFX
