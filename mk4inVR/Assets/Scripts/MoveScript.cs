@@ -82,7 +82,7 @@ public class MoveScript : MonoBehaviour
         followTarget = target;
    
         
-        move_speed = 2000f;
+        move_speed = 1000f;
     }
 
     // Update is called once per frame
@@ -335,7 +335,7 @@ public class MoveScript : MonoBehaviour
             // }
         }
 
-        if (c.gameObject.tag == "SlowArea") move_speed = 2000.0f;
+        if (c.gameObject.tag == "SlowArea") move_speed = 1000.0f;
     }
 
     public void OnTriggerStay(Collider c)
