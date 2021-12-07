@@ -6,7 +6,8 @@ using UnityEngine.UI;
 //近づいた時の吹き出しの表示
 public class PopupTextScript : MonoBehaviour
 {
-    [SerializeField] ManagerScript manager;
+    [SerializeField] ManagerScript manager = null;
+    [SerializeField] GameObject Camera = null;
 
     public GameObject popupObj;
     public GameObject popupCanvas;
@@ -16,7 +17,7 @@ public class PopupTextScript : MonoBehaviour
     {
         if (popupObj.activeSelf)
         {
-            Transform camera = Camera.main.transform;
+            Transform camera = Camera.transform;
             if (popup != null)
             {
                 popup.LookAt(camera.position);

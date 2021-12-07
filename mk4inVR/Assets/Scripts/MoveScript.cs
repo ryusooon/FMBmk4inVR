@@ -242,21 +242,21 @@ public class MoveScript : MonoBehaviour
         Debug.Log("In");
         //NavDet = false;
 
-        if (test == true)
-        {
-            Debug.Log("両方In");
-            pattern = true;
-            agent.enabled = true;
-            //agent.SetDestination(target.position);
-        }
+        //if (test == true)
+        //{
+        //    Debug.Log("両方In");
+        //    pattern = true;
+        //    agent.enabled = true;
+        //    //agent.SetDestination(target.position);
+        //}
 
-        if (test == false)
-        {
-            Debug.Log("プレイヤーだけIn");
-            followTarget = target;
-            agent.enabled = false;
-            pattern = false;
-        }
+        //if (test == false)
+        //{
+        //    Debug.Log("プレイヤーだけIn");
+        //    followTarget = target;
+        //    agent.enabled = false;
+        //    pattern = false;
+        //}
         //if (test == false)
         //{
         //    Debug.Log("プレイヤーだけIn");
