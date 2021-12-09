@@ -6,6 +6,7 @@ using UnityEngine;
 public class SoundManageScript : MonoBehaviour
 {
     public AudioClip getItem_mp3; //アイテム獲得時のSE
+
     AudioSource audioSource;
 
     [SerializeField] ItemManageScript itemMana_sc;
@@ -17,6 +18,7 @@ public class SoundManageScript : MonoBehaviour
 
     void Update()
     {
+
         //アイテム獲得時に鳴らす
         if (itemMana_sc.itemSound_shot)
         {
