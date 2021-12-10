@@ -29,7 +29,8 @@ public class PlayerVRScript : MonoBehaviour
     [SerializeField] float PlayerSpeed = 20.0f;
     public static int PlayerVectMag;
     public static float Axel;
-    [SerializeField] float MoveSpeed = 15.0f;
+    [SerializeField] float MoveSpeed = 10.0f;
+    [SerializeField] float UpSpeed = 5000000000000000.0f;
 
     //　ステータス用
     public float Dir_y = 0;
@@ -72,7 +73,6 @@ public class PlayerVRScript : MonoBehaviour
     [SerializeField] GameObject camera = null;
     //ItemManageScript itemManager;
 
-
     private void Start()
     {
         CameraRb = this.gameObject.transform.GetComponent<Rigidbody>();
@@ -93,7 +93,7 @@ public class PlayerVRScript : MonoBehaviour
         PlayerVectMag = 0;
         Axel = 0.0f;
         if (manager.VR_mode) MoveSpeed = 15.0f;
-        else                 MoveSpeed = 50.0f;
+        else                 MoveSpeed = 15.0f;
 
         Vector3 worldAngle = transform.eulerAngles;
         worldAngle.x = AnglSpeed;
@@ -135,6 +135,12 @@ public class PlayerVRScript : MonoBehaviour
             {
                 Stop();
             }
+            /*
+            else if( Controller.transform.rotation.z < -0.25f)
+            {
+                SpeedUp();
+            }
+            */
             else
             {
                 Move();
@@ -227,6 +233,10 @@ public class PlayerVRScript : MonoBehaviour
 
         }
 
+        Debug.Log("Controller.x:" + Controller.transform.rotation.x);
+        Debug.Log("Controller.y:" + Controller.transform.rotation.y);
+        Debug.Log("Controller.z:" + Controller.transform.rotation.z);
+
     }
 
     void FixedUpdate()
@@ -252,6 +262,13 @@ public class PlayerVRScript : MonoBehaviour
         Axel = 0f;
         CameraRb.drag = 2;
         Debug.Log("StopNow");
+    }
+
+    private void SpeedUp()
+    {
+        Axel = UpSpeed;
+        CameraRb.drag = 1;
+        Debug.Log("SpeedUp");
     }
 
     //視線だけ操作
