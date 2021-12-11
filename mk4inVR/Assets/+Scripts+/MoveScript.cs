@@ -44,7 +44,7 @@ public class MoveScript : MonoBehaviour
 
 
     private string Pos;
-
+    public bool LookOk = false;
     [SerializeField] FinishAreaScript Finish;
     [SerializeField] Transform Lpos1;
 
@@ -314,9 +314,12 @@ public class MoveScript : MonoBehaviour
         if (c.gameObject.tag == "StopArea") rb.velocity = transform.forward * 0;
         if (c.gameObject.tag == "outagesPos")
         {
-            rb.velocity = transform.forward * 0;
-            ActiveFlag = false;
-            move_speed = 0f;
+            //rb.velocity = transform.forward * 0;
+            //ActiveFlag = false;
+            //move_speed = 0f;
+            //Debug.Log("さいごのPos");
+            LookOk = true;
+            this.GetComponent<MoveScript>().enabled = false;
         }
 
     }
