@@ -233,9 +233,9 @@ public class PlayerVRScript : MonoBehaviour
 
         }
 
-        Debug.Log("Controller.x:" + Controller.transform.rotation.x);
-        Debug.Log("Controller.y:" + Controller.transform.rotation.y);
-        Debug.Log("Controller.z:" + Controller.transform.rotation.z);
+        //Debug.Log("Controller.x:" + Controller.transform.rotation.x);
+        //Debug.Log("Controller.y:" + Controller.transform.rotation.y);
+        //Debug.Log("Controller.z:" + Controller.transform.rotation.z);
 
     }
 
@@ -247,7 +247,7 @@ public class PlayerVRScript : MonoBehaviour
         PlayerRb.AddForce(Broom.transform.forward * PlayerSpeed * Axel, ForceMode.Force);
 
         PlayerVectMag = Mathf.FloorToInt(CameraRb.velocity.magnitude);
-
+        Debug.Log(PlayerRb.velocity);
     }
 
     private void Move()

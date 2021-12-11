@@ -338,7 +338,7 @@ public class MoveScript : MonoBehaviour
             // }
         }
 
-        if (c.gameObject.tag == "SlowArea") move_speed = 1000.0f;
+        if (c.gameObject.tag == "SlowArea") move_speed = 1500.0f;
     }
 
     public void OnTriggerStay(Collider c)
@@ -349,7 +349,7 @@ public class MoveScript : MonoBehaviour
         //    rb.velocity = Vector3.zero;
         //}
 
-        if (c.gameObject.tag == "SlowArea") move_speed = 100.0f;
+        if (c.gameObject.tag == "SlowArea") move_speed = 150.0f;
     }
 
     protected void DoAutoMovement()
@@ -357,6 +357,7 @@ public class MoveScript : MonoBehaviour
         switch (currentMoveMode)
         {
             case MoveMode.Wait:
+                this.transform.LookAt(target);
                 rb.velocity = transform.forward * 0;
                 break;
             case MoveMode.Follow:
