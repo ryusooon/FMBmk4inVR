@@ -93,7 +93,7 @@ public class PlayerVRScript : MonoBehaviour
         PlayerVectMag = 0;
         Axel = 0.0f;
         if (manager.VR_mode) MoveSpeed = 15.0f;
-        else                 MoveSpeed = 15.0f;
+        else                 MoveSpeed = 50.0f;
 
         Vector3 worldAngle = transform.eulerAngles;
         worldAngle.x = AnglSpeed;

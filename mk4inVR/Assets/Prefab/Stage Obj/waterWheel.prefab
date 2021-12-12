@@ -253,8 +253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5306d55ecc289ad4f9b9ca229d950022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spin_speed_A: 0
-  spin_speed_B: 5
+  spin_speed_A: 5
+  spin_speed_B: 0
 --- !u!1 &3545436527864785892
 GameObject:
   m_ObjectHideFlags: 0
