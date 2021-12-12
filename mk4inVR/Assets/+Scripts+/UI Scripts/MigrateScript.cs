@@ -45,8 +45,6 @@ public class MigrateScript : MonoBehaviour
     {
         //manuButtons = GameObject.FindGameObjectsWithTag("Scene2");
         disciple1 = GameObject.Find("A");
-
-
     }
 
     // Update is called once per frame

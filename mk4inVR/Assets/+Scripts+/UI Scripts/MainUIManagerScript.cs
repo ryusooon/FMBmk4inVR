@@ -10,7 +10,8 @@ public class MainUIManagerScript : MonoBehaviour
     [SerializeField] CanvasGroup Soundmanu;
     [SerializeField] CanvasGroup Contllolmanu;
     [SerializeField] CanvasGroup MainCanvas;
-
+    [SerializeField] CanvasGroup ResultCanvas;
+    [SerializeField] FinishAreaScript FinScript;
 
 
 
@@ -28,7 +29,12 @@ public class MainUIManagerScript : MonoBehaviour
             Debug.Log("Pause押したよ");
             CanvasGroupOnOf(Pausemanu,true);
             CanvasGroupOnOf(MainCanvas, false);
+        }
 
+        if(FinScript.OnTriggerFin)
+        {
+            CanvasGroupOnOf(MainCanvas, false);
+            CanvasGroupOnOf(ResultCanvas, true);
         }
     }
 
@@ -38,6 +44,12 @@ public class MainUIManagerScript : MonoBehaviour
         CanvasGroupOnOf(Pausemanu, false);
         CanvasGroupOnOf(MainCanvas, true);
 
+    }
+
+    public void ExitResultCanvas()
+    {
+        CanvasGroupOnOf(MainCanvas, true);
+        CanvasGroupOnOf(ResultCanvas, false);
     }
 
     public void BackTitle()//タイトル画面に戻る
