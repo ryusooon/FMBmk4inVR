@@ -10,9 +10,9 @@ public class TextScript : MonoBehaviour
     [SerializeField] ManagerScript manager;
     public GameObject questTxtOb = null;
 
-    int reqNumA = 3;
-    int reqNumB = 2;
-    int reqNumC = 2;
+    int reqNumA = 9;//3
+    int reqNumB = 9;//2
+    int reqNumC = 9;//2
 
     void Update()
     {

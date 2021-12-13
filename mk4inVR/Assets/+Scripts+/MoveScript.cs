@@ -193,7 +193,7 @@ public class MoveScript : MonoBehaviour
 
             if (pattern == false)
             {
-                Debug.Log("気合でついてくる");
+                //Debug.Log("気合でついてくる");
                 agent.enabled = false;
                 DoAutoMovement();
                 //if (NavDet == true)
