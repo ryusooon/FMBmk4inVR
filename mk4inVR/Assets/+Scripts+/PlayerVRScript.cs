@@ -245,17 +245,17 @@ public class PlayerVRScript : MonoBehaviour
     void FixedUpdate()
     {
         //CameraRigを随時箒の方向に向けて移動、PlayerRigも同様に連動して移動
-        if (mainUIs.OnPause)
-        {
+      //  if (mainUIs.OnPause)
+      //  {
             CameraRb.AddForce(Broom.transform.forward * PlayerSpeed * Axel, ForceMode.Force);
             PlayerRb.AddForce(Broom.transform.forward * PlayerSpeed * Axel, ForceMode.Force);
             PlayerVectMag = Mathf.FloorToInt(CameraRb.velocity.magnitude);
-        }
-        else
-        {
+      //  }
+        //else
+        //{
             CameraRb.AddForce(Broom.transform.forward * PlayerSpeed * 0, ForceMode.Force);
             PlayerRb.AddForce(Broom.transform.forward * PlayerSpeed * 0, ForceMode.Force);
-        }
+        //}
         //Debug.Log(PlayerRb.velocity);
     }
 
