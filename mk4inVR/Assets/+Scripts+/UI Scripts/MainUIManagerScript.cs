@@ -13,7 +13,7 @@ public class MainUIManagerScript : MonoBehaviour
     [SerializeField] CanvasGroup ResultCanvas;
     [SerializeField] FinishAreaScript FinScript;
 
-
+    public bool OnPause = true;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +29,7 @@ public class MainUIManagerScript : MonoBehaviour
             Debug.Log("Pause押したよ");
             CanvasGroupOnOf(Pausemanu,true);
             CanvasGroupOnOf(MainCanvas, false);
+            OnPause = false;
         }
 
         if(FinScript.OnTriggerFin)
@@ -43,7 +44,7 @@ public class MainUIManagerScript : MonoBehaviour
 
         CanvasGroupOnOf(Pausemanu, false);
         CanvasGroupOnOf(MainCanvas, true);
-
+        OnPause = true;
     }
 
     public void ExitResultCanvas()

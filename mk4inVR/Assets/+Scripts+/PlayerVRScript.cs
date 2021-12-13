@@ -48,6 +48,9 @@ public class PlayerVRScript : MonoBehaviour
     [SerializeField] GameObject Broom;
 
 
+    //Pause画面入る時に処理を止めるのに必要な宣言
+    [SerializeField] MainUIManagerScript mainUIs;
+
 
     // 以下キー入力用変数
     // 上下左右各キーの入力情報を格納する変数
@@ -242,12 +245,18 @@ public class PlayerVRScript : MonoBehaviour
     void FixedUpdate()
     {
         //CameraRigを随時箒の方向に向けて移動、PlayerRigも同様に連動して移動
-
-        CameraRb.AddForce(Broom.transform.forward * PlayerSpeed * Axel, ForceMode.Force);
-        PlayerRb.AddForce(Broom.transform.forward * PlayerSpeed * Axel, ForceMode.Force);
-
-        PlayerVectMag = Mathf.FloorToInt(CameraRb.velocity.magnitude);
-        Debug.Log(PlayerRb.velocity);
+        if (mainUIs.OnPause)
+        {
+            CameraRb.AddForce(Broom.transform.forward * PlayerSpeed * Axel, ForceMode.Force);
+            PlayerRb.AddForce(Broom.transform.forward * PlayerSpeed * Axel, ForceMode.Force);
+            PlayerVectMag = Mathf.FloorToInt(CameraRb.velocity.magnitude);
+        }
+        else
+        {
+            CameraRb.AddForce(Broom.transform.forward * PlayerSpeed * 0, ForceMode.Force);
+            PlayerRb.AddForce(Broom.transform.forward * PlayerSpeed * 0, ForceMode.Force);
+        }
+        //Debug.Log(PlayerRb.velocity);
     }
 
     private void Move()
