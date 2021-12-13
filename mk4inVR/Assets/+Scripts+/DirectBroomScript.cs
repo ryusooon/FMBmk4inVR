@@ -5,7 +5,7 @@ using UnityEngine;
 public class DirectBroomScript : MonoBehaviour
 {
     [SerializeField] GameObject ControllerR = null;
-
+    [SerializeField] MainUIManagerScript mainUI;
     void Start()
     {
         
@@ -14,6 +14,9 @@ public class DirectBroomScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.rotation = ControllerR.transform.rotation;
+        //if (mainUI.OnPause == true)
+        //{
+            transform.rotation = ControllerR.transform.rotation;
+       // }
     }
 }

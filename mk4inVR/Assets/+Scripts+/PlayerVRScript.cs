@@ -142,7 +142,7 @@ public class PlayerVRScript : MonoBehaviour
 
             //Debug.Log(" AbsoluVecX = " + AbsoluVecX + " AbsoluVecY = " + AbsoluVecY + " AbsoluVecZ = " + AbsoluVecZ);
 
-            if (AbsoluVecX >= 1.0f && AbsoluVecZ >= 1.0f)
+            if ((AbsoluVecX >= 1.0f && AbsoluVecZ >= 1.0f) || mainUIs.OnPause == true)
             {
                 Stop();
             }
@@ -262,23 +262,23 @@ public class PlayerVRScript : MonoBehaviour
 
         Vec = VecPos.transform.position - this.transform.position;
 
-        Debug.Log("ベク：" + Vec);
+        //Debug.Log("ベク：" + Vec);
 
     }
 
     void FixedUpdate()
     {
         //CameraRigを随時箒の方向に向けて移動、PlayerRigも同様に連動して移動
-      //  if (mainUIs.OnPause)
-      //  {
+        //if (mainUIs.OnPause == false)
+        //{
             CameraRb.AddForce(Broom.transform.forward * PlayerSpeed * Axel, ForceMode.Force);
             PlayerRb.AddForce(Broom.transform.forward * PlayerSpeed * Axel, ForceMode.Force);
             PlayerVectMag = Mathf.FloorToInt(CameraRb.velocity.magnitude);
-      //  }
+        //}
         //else
         //{
-            CameraRb.AddForce(Broom.transform.forward * PlayerSpeed * 0, ForceMode.Force);
-            PlayerRb.AddForce(Broom.transform.forward * PlayerSpeed * 0, ForceMode.Force);
+            //CameraRb.AddForce(Broom.transform.forward * PlayerSpeed * 0, ForceMode.Force);
+            //PlayerRb.AddForce(Broom.transform.forward * PlayerSpeed * 0, ForceMode.Force);
         //}
         //Debug.Log(PlayerRb.velocity);
     }
