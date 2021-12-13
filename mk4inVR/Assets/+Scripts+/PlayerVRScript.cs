@@ -18,8 +18,13 @@ public class PlayerVRScript : MonoBehaviour
 
     [SerializeField] Transform E;
     private Quaternion offsetRotation;
+
     // トリガー入力に使用する変数
     private SteamVR_Action_Boolean Trigger = SteamVR_Actions._default.InteractUI;
+    private Boolean TriggerOn;
+
+    private SteamVR_Action_Boolean Grab = SteamVR_Actions.default_GrabGrip;
+    private Boolean GrabGrip;
 
     // 今回使用する各リジットボディー
     public static Rigidbody CameraRb { set; get; }
@@ -30,7 +35,7 @@ public class PlayerVRScript : MonoBehaviour
     public static int PlayerVectMag;
     public static float Axel;
     [SerializeField] float MoveSpeed = 10.0f;
-    [SerializeField] float UpSpeed = 5000000000000000.0f;
+    [SerializeField] float UpSpeed = 10.0f;
 
     //　ステータス用
     public float Dir_y = 0;
@@ -76,6 +81,9 @@ public class PlayerVRScript : MonoBehaviour
     [SerializeField] GameObject camera = null;
     //ItemManageScript itemManager;
 
+    Vector3 Vec;
+    [SerializeField] GameObject VecPos;
+
     private void Start()
     {
         CameraRb = this.gameObject.transform.GetComponent<Rigidbody>();
@@ -95,8 +103,8 @@ public class PlayerVRScript : MonoBehaviour
         RotateSpeed = 45f;
         PlayerVectMag = 0;
         Axel = 0.0f;
-        if (manager.VR_mode) MoveSpeed = 15.0f;
-        else                 MoveSpeed = 50.0f;
+        if (manager.VR_mode) MoveSpeed = 5.0f;
+        else                 MoveSpeed = 5.0f;
 
         Vector3 worldAngle = transform.eulerAngles;
         worldAngle.x = AnglSpeed;
@@ -138,15 +146,27 @@ public class PlayerVRScript : MonoBehaviour
             {
                 Stop();
             }
-            /*
-            else if( Controller.transform.rotation.z < -0.25f)
+            else if( Vec.y < -0.1f)
             {
                 SpeedUp();
             }
-            */
             else
             {
                 Move();
+            }
+
+            TriggerOn = Trigger.GetState(SteamVR_Input_Sources.RightHand);
+
+            if (TriggerOn)
+            {
+                Debug.Log("TriggerOn");
+            }
+
+            GrabGrip = Grab.GetState(SteamVR_Input_Sources.RightHand);
+
+            if (GrabGrip)
+            {
+                Debug.Log("GrabGrip");
             }
 
         }
@@ -239,6 +259,10 @@ public class PlayerVRScript : MonoBehaviour
         //Debug.Log("Controller.x:" + Controller.transform.rotation.x);
         //Debug.Log("Controller.y:" + Controller.transform.rotation.y);
         //Debug.Log("Controller.z:" + Controller.transform.rotation.z);
+
+        Vec = VecPos.transform.position - this.transform.position;
+
+        Debug.Log("ベク：" + Vec);
 
     }
 
