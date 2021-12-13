@@ -21,6 +21,7 @@ TagManager:
   - Pos3
   - FinishArea
   - outagesPos
+  - Freeza
   layers:
   - Default
   - TransparentFX

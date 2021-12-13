@@ -210,6 +210,7 @@ public class MoveScript : MonoBehaviour
             move_speed = 100f;
         }
         //DoAutoMovement();
+        
     }
 
     public void AreaExitDetection()
@@ -322,6 +323,8 @@ public class MoveScript : MonoBehaviour
             this.GetComponent<MoveScript>().enabled = false;
         }
 
+        
+
     }
 
     public void OnTriggerExit(Collider c)
@@ -339,6 +342,11 @@ public class MoveScript : MonoBehaviour
         }
 
         if (c.gameObject.tag == "SlowArea") move_speed = 1500.0f;
+
+        if (c.gameObject.tag == "Freeza")
+        {
+            rb.constraints = RigidbodyConstraints.None;
+        }
     }
 
     public void OnTriggerStay(Collider c)
@@ -349,7 +357,14 @@ public class MoveScript : MonoBehaviour
         //    rb.velocity = Vector3.zero;
         //}
 
-        if (c.gameObject.tag == "SlowArea") move_speed = 50.0f;
+        if (c.gameObject.tag == "SlowArea") move_speed = 100.0f;
+
+        if (c.gameObject.tag == "Freeza")
+        {
+            rb.constraints = RigidbodyConstraints.FreezePosition;
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+        }
+        
     }
 
     protected void DoAutoMovement()
@@ -359,11 +374,13 @@ public class MoveScript : MonoBehaviour
             case MoveMode.Wait:
                 this.transform.LookAt(target);
                 rb.velocity = transform.forward * 0;
-                rb.constraints = RigidbodyConstraints.FreezePosition;
+              //  rb.constraints = RigidbodyConstraints.FreezePosition;
+             //   rb.constraints = RigidbodyConstraints.FreezeRotation;
                 break;
             case MoveMode.Follow:
                 if (followTarget != null)
                 {
+                  //  rb.constraints = RigidbodyConstraints.None;
                     //Quaternion move_rotation = Quaternion.LookRotation(followTarget.transform.position - transform.position, Vector3.up);
                     //transform.rotation = Quaternion.Lerp(transform.rotation, move_rotation, 0.1f);
                     //rb.velocity = transform.forward * move_speed;
