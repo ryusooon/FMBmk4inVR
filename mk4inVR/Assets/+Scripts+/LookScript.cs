@@ -17,7 +17,7 @@ public class LookScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (moveScript.LookOk) LookOk = true;
+       // if (moveScript.LookOk) LookOk = true;
 
         if(LookOk)
         {

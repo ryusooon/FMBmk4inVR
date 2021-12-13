@@ -349,7 +349,7 @@ public class MoveScript : MonoBehaviour
         //    rb.velocity = Vector3.zero;
         //}
 
-        if (c.gameObject.tag == "SlowArea") move_speed = 150.0f;
+        if (c.gameObject.tag == "SlowArea") move_speed = 50.0f;
     }
 
     protected void DoAutoMovement()
@@ -359,6 +359,7 @@ public class MoveScript : MonoBehaviour
             case MoveMode.Wait:
                 this.transform.LookAt(target);
                 rb.velocity = transform.forward * 0;
+                rb.constraints = RigidbodyConstraints.FreezePosition;
                 break;
             case MoveMode.Follow:
                 if (followTarget != null)
