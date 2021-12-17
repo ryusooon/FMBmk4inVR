@@ -126,6 +126,8 @@ public class PlayerVRScript : MonoBehaviour
             AbsoluVecY = ControllerVector.GetAngularVelocityEstimate().y;
             AbsoluVecZ = ControllerVector.GetAngularVelocityEstimate().z;
 
+            Vec = VecPos.transform.position - this.transform.position;
+
             // 加速度の値が負の場合、マイナスを掛けて絶対値にする
             if (AbsoluVecX < 0.0f)
             {
@@ -146,10 +148,12 @@ public class PlayerVRScript : MonoBehaviour
             {
                 Stop();
             }
+            /*
             else if( Vec.y < -0.1f)
             {
                 SpeedUp();
             }
+            */
             else
             {
                 Move();
@@ -259,8 +263,6 @@ public class PlayerVRScript : MonoBehaviour
         //Debug.Log("Controller.x:" + Controller.transform.rotation.x);
         //Debug.Log("Controller.y:" + Controller.transform.rotation.y);
         //Debug.Log("Controller.z:" + Controller.transform.rotation.z);
-
-        Vec = VecPos.transform.position - this.transform.position;
 
         //Debug.Log("ベク：" + Vec);
 
