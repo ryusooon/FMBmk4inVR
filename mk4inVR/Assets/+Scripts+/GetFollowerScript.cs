@@ -32,7 +32,7 @@ public class GetFollowerScript : MonoBehaviour
                 quest.setAc_once = true;
                 manager.getFol_A_Flag = true;
                 popupText_SF_A.SetActive(false);
-                other.transform.root.gameObject.SetActive(false);
+                //other.transform.root.gameObject.SetActive(false);
             }
             else if (rootOther.tag == "FollowerB" && manager.itemB_count == 0)
             {

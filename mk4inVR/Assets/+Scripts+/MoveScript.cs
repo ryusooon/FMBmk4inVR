@@ -12,7 +12,7 @@ public enum MoveMode
 public class MoveScript : MonoBehaviour
 {
     InOutScript IoS;
-    public float move_speed = 1000f;
+    public float move_speed = 100f;
 
     public GameObject M1;
     public GameObject M2;
@@ -47,6 +47,10 @@ public class MoveScript : MonoBehaviour
     public bool LookOk = false;
     [SerializeField] FinishAreaScript Finish;
     [SerializeField] Transform Lpos1;
+
+    [SerializeField] GameObject CheckArea;
+    [SerializeField] GameObject ShowTextArea;
+    private bool CanDestroyStayState = true;
 
     // Start is called before the first frame update
     void Start()
@@ -176,7 +180,7 @@ public class MoveScript : MonoBehaviour
 
         if (ActiveFlag)
         {
-
+            if (CanDestroyStayState) DestroyObj();
             NavDet = true;
             if (pattern == true)
             {
@@ -202,6 +206,10 @@ public class MoveScript : MonoBehaviour
                 //    rb.AddForce(transform.forward * move_speed, ForceMode.Force);
                 //}
             }
+        }
+        else
+        {
+            this.transform.LookAt(target);
         }
 
         if (Finish.OnTriggerFin)
@@ -390,6 +398,14 @@ public class MoveScript : MonoBehaviour
 
                 break;
         }
+    }
+
+    private void DestroyObj()
+    {
+        Destroy(ShowTextArea);
+        Destroy(CheckArea);
+
+        CanDestroyStayState = false;
     }
 
 }
