@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3033667219593020291, guid: 7986c748f4e0c744393c04b44af8ae87, type: 3}
+  - {fileID: 2100000, guid: ab0571706ac731d42bca4c4acd02dc24, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7008481768283976665}
   m_Layer: 0
-  m_Name: bridge
+  m_Name: bridge Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
