@@ -1010,7 +1010,7 @@ MonoBehaviour:
     parentGroupID: 5
     childGroupIDs: 
     geometryMode: 0
-    materialLeaf: {fileID: 0}
+    materialLeaf: {fileID: 2100000, guid: 1b8dad9ac03bc2a47acff60107078a15, type: 2}
     instanceMesh: {fileID: 0}
     size: {x: 1.0561291, y: 1.1235484}
     perpendicularAlign: 0
