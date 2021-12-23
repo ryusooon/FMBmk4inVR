@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7760813793220203777}
   - component: {fileID: 7239516229655249129}
   m_Layer: 0
-  m_Name: Tree
+  m_Name: TreeFe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +69,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 22a716b229cb418478e161503998b0a5, type: 2}
-  - {fileID: 2100000, guid: ef9c926eb1f80504b88694521a9bafed, type: 2}
+  - {fileID: 2100000, guid: 1b8dad9ac03bc2a47acff60107078a15, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -82,7 +82,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -1287,7 +1287,7 @@ MonoBehaviour:
     parentGroupID: 89
     childGroupIDs: 
     geometryMode: 0
-    materialLeaf: {fileID: 2100000, guid: 67af680b9f538e249bafbc8f728eccd9, type: 2}
+    materialLeaf: {fileID: 2100000, guid: 1b8dad9ac03bc2a47acff60107078a15, type: 2}
     instanceMesh: {fileID: 0}
     size: {x: 1, y: 1.4174242}
     perpendicularAlign: 0
