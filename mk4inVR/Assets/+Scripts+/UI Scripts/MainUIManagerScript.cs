@@ -50,8 +50,8 @@ public class MainUIManagerScript : MonoBehaviour
             FakeRay.SetActive(true);
             if (Physics.Raycast(ray, out hitObj))
             {
-                Debug.Log(hitObj);
-                Debug.DrawRay(ray.origin, ray.direction * 15f, Color.green, 5, false);
+                //Debug.Log(hitObj);
+                //Debug.DrawRay(ray.origin, ray.direction * 15f, Color.green, 5, false);
 
                 if (hitObj.collider.gameObject.name == "ExitPauseManu" && GrabGrip)
                 {
@@ -136,7 +136,8 @@ public class MainUIManagerScript : MonoBehaviour
 
     public void BackTitle()//タイトル画面に戻る
     {
-        SceneManager.LoadScene("TitleScene");
+        //SceneManager.LoadScene("TitleScene");
+        SceneManager.LoadScene("MainScene");
     }
 
     public void pushSoundButton()

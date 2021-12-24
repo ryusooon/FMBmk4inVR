@@ -148,12 +148,10 @@ public class PlayerVRScript : MonoBehaviour
             {
                 Stop();
             }
-            /*
-            else if( Vec.y < -0.1f)
+            /*else if( Vec.y < -0.3f)
             {
                 SpeedUp();
-            }
-            */
+            }*/
             else
             {
                 Move();
