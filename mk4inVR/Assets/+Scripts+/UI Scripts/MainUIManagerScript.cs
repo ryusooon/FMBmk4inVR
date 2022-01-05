@@ -25,7 +25,10 @@ public class MainUIManagerScript : MonoBehaviour
 
     public bool OnPause = false;
     private SteamVR_Action_Boolean Grab = SteamVR_Actions.default_GrabGrip;
+    private SteamVR_Action_Boolean Trigger = SteamVR_Actions._default.InteractUI;
     private Boolean GrabGrip;
+    private Boolean TriggerOn;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +39,7 @@ public class MainUIManagerScript : MonoBehaviour
     void Update()
     {
         GrabGrip = Grab.GetState(SteamVR_Input_Sources.RightHand);
+        TriggerOn = Trigger.GetState(SteamVR_Input_Sources.RightHand);
 
         if (Input.GetKeyDown(KeyCode.Escape)|| GrabGrip)//取りあえずいったんEscapeKeyでManuを開くようにする
         {
