@@ -29,6 +29,8 @@ public class MainUIManagerScript : MonoBehaviour
     private Boolean GrabGrip;
     private Boolean TriggerOn;
 
+    private bool OnTriggerHR = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,12 +43,31 @@ public class MainUIManagerScript : MonoBehaviour
         GrabGrip = Grab.GetState(SteamVR_Input_Sources.RightHand);
         TriggerOn = Trigger.GetState(SteamVR_Input_Sources.RightHand);
 
-        if (Input.GetKeyDown(KeyCode.Escape)|| GrabGrip)//取りあえずいったんEscapeKeyでManuを開くようにする
+        if(GrabGrip) //横ボタンでTrueになる
         {
+            OnTriggerHR = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape)||OnTriggerHR /*|| GrabGrip*/)//取りあえずいったんEscapeKeyでManuを開くようにする
+        {
+
             Debug.Log("Pause押したよ");
-            CanvasGroupOnOf(Pausemanu,true);
-            CanvasGroupOnOf(MainCanvas, false);
+            //CanvasGroupOnOf(Pausemanu, true);
+            //CanvasGroupOnOf(MainCanvas, false);
             OnPause = true;
+
+        }
+
+        if(OnPause)
+        {
+            CanvasGroupOnOf(Pausemanu, true);
+            CanvasGroupOnOf(MainCanvas, false);
+
+            if (GrabGrip || Input.GetKeyDown(KeyCode.Escape))//中に入れる状態で再度押したらfalseになるようにしてみる
+            {
+               // OnTriggerHR = false;
+               // OnPause = false;
+            }
 
 
             RaycastHit hitObj;
@@ -57,49 +78,54 @@ public class MainUIManagerScript : MonoBehaviour
                 //Debug.Log(hitObj);
                 //Debug.DrawRay(ray.origin, ray.direction * 15f, Color.green, 5, false);
 
-                if (hitObj.collider.gameObject.name == "ExitPauseManu" && GrabGrip)
+                if (hitObj.collider.gameObject.name == "ExitPauseManu" && TriggerOn /*|| GrabGrip*/)
                 {
                     ExitPauseManu();
                 }
 
 
-                if (hitObj.collider.gameObject.name == "BackTitle" && GrabGrip)
+                if (hitObj.collider.gameObject.name == "BackTitle" && TriggerOn /*|| GrabGrip*/)
                 {
                     BackTitle();
                 }
 
-                if (hitObj.collider.gameObject.name == "GoSoundManu" && GrabGrip)
+                if (hitObj.collider.gameObject.name == "GoSoundManu" && TriggerOn /*|| GrabGrip*/)
                 {
                     pushSoundButton();
                 }
 
-                if (hitObj.collider.gameObject.name == "GoContllol" && GrabGrip)
+                if (hitObj.collider.gameObject.name == "GoContllol" && TriggerOn /*|| GrabGrip*/)
                 {
                     pushContllolButton();
                 }
 
-                if (hitObj.collider.gameObject.name == "ExitthisManu" && GrabGrip)
+                if (hitObj.collider.gameObject.name == "ExitthisManu" && TriggerOn /*|| GrabGrip*/)
                 {
                     BackPauseManu1();
                 }
 
-                if (hitObj.collider.gameObject.name == "ExitCManu" && GrabGrip)
+                if (hitObj.collider.gameObject.name == "ExitCManu" && TriggerOn /*|| GrabGrip*/)
                 {
                     BackPauseManu2();
                 }
 
-                if (hitObj.collider.gameObject.name == "BackTitle1" && GrabGrip)
+                if (hitObj.collider.gameObject.name == "BackTitle1" && TriggerOn /*|| GrabGrip*/)
                 {
                     BackTitle();
                 }
 
-                if (hitObj.collider.gameObject.name == "ExitResult" && GrabGrip)
+                if (hitObj.collider.gameObject.name == "ExitResult" && TriggerOn /*|| GrabGrip*/)
                 {
                     ExitResultCanvas();
                 }
 
 
             }
+        }
+        else
+        {
+            CanvasGroupOnOf(Pausemanu, false);
+            CanvasGroupOnOf(MainCanvas, true);
         }
 
         if(FinScript.OnTriggerFin)
