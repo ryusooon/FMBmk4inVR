@@ -35,12 +35,12 @@ public class DoSomethingFromSerial : MonoBehaviour
     {
         if (!manager.brake_event)
         {
-            _renderer.enabled = true;
+            _renderer.enabled = false;
             Debug.Log("Powaaaaaaaaaaaaaaaaaaaa");
         }
         else
         {
-            _renderer.enabled = false;
+            _renderer.enabled = true;
             Debug.Log("Nooooooooooooooooooooooon");
         }
     }

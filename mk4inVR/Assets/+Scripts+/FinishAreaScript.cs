@@ -11,7 +11,7 @@ public class FinishAreaScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //&&(manager.getFol_A_Flag == true && manager.getFol_B_Flag == true && manager.getFol_C_Flag == true)
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player")&&(manager.getFol_A_Flag == true && manager.getFol_B_Flag == true && manager.getFol_C_Flag == true))
         {
             OnTriggerFin = true;
             Debug.Log("FinAreaに当たったで");

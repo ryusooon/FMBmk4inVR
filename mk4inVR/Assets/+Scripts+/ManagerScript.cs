@@ -29,7 +29,7 @@ public class ManagerScript : MonoBehaviour
     public int nowQue { get; set; } = 1; //誘導中の依頼番号
     public bool followerState { get; set; } = false; //仲間の状態
     public bool rise_flag { get; set; } = false; //RiseAreaによる上昇中
-    public bool brake_event { get; set; } = true; //停止イベント
+    public bool brake_event { get; set; } = false; //停止イベント
 
     public bool VR_mode { get; set; } = false; //VRカメラのON/OFF
     public bool autoAccel_mode { get; set; } = false; //自動前進のON/OFF
