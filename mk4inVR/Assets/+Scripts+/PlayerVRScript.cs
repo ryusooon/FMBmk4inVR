@@ -84,7 +84,7 @@ public class PlayerVRScript : MonoBehaviour
     Vector3 Vec;
     [SerializeField] GameObject VecPos;
 
-    float AccelerationValue = 1.5f;
+    float AccelerationValue = 1.25f;
     bool StopOn;
 
     private void Start()
@@ -150,22 +150,29 @@ public class PlayerVRScript : MonoBehaviour
 
             //Debug.Log(" AbsoluVecX = " + AbsoluVecX + " AbsoluVecY = " + AbsoluVecY + " AbsoluVecZ = " + AbsoluVecZ);
 
+            /*
             // プレイヤーが箒を振った際、XとZの加速度がVecValue以上の数値になった場合
-            if ((AbsoluVecX >= AccelerationValue && AbsoluVecZ >= AccelerationValue) /*|| mainUIs.OnPause == true */ )
+            if ((AbsoluVecX >= AccelerationValue && AbsoluVecZ >= AccelerationValue) || mainUIs.OnPause == true  )
             {
 
                 // 更にその際、箒の傾きが1.5fより上であった場合
-                if (Vec.y > 1.5f)
+                if (Vec.y > 1.0f)
                 {
                     StopOn = true;
                 }
 
             }
-            else if (StopOn == true && Vec.y <= 1.5f)
+            else if (StopOn == true )
             {
+                
+                if(Vec.y <= 1.0f)
+                {
                 // 止まった状態で箒の傾きが1.5f以下であった場合
                 StopOn = false;
+                }
+
             }
+            */
 
             if (StopOn == true || mainUIs.OnPause == true || manager.brake_event == true)
             {
@@ -304,7 +311,7 @@ public class PlayerVRScript : MonoBehaviour
         //Debug.Log(PlayerRb.velocity);
     }
 
-    private void Move()
+    public void Move()
     {
         Axel = MoveSpeed;
         CameraRb.drag = 1;
