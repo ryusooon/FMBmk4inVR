@@ -25,6 +25,11 @@ public class MainUIManagerScript : MonoBehaviour
     [SerializeField] GameObject MainCanvasObj;
     [SerializeField] GameObject ResultCanvasObj;
 
+
+    [SerializeField] CanvasGroup newPausemanu; 
+    public Button Restertbutton;
+    public Button backbutton;
+
     public Camera Camera;
     public GameObject houki;
     [SerializeField] GameObject FakeRay;
@@ -44,6 +49,9 @@ public class MainUIManagerScript : MonoBehaviour
     private int UIX = 200 ;
     private int UIY = 100 ;
     private int UIZ = -6 ;
+
+    private int t = 0;
+    private int nowButton = 0;
 
     private Vector3 UIpos1 = new Vector3(300,75,-30);
     private Vector3 UIpos2 = new Vector3(320,75,-30);
@@ -68,7 +76,7 @@ public class MainUIManagerScript : MonoBehaviour
         GrabGrip = Grab.GetState(SteamVR_Input_Sources.RightHand);
         TriggerOn = Trigger.GetState(SteamVR_Input_Sources.RightHand);
 
-        if(GrabGrip||Input.GetKeyDown(KeyCode.Escape)&&nowManu == 0) //横ボタンでTrueになる
+        if(GrabGrip||Input.GetKeyDown(KeyCode.Escape)/*&&nowManu == 0*/) //横ボタンでTrueになる
         {
             CanvasGroupOnOf(Pausemanu, true);
             CanvasGroupOnOf(MainCanvas, false);
@@ -81,7 +89,7 @@ public class MainUIManagerScript : MonoBehaviour
 
             PausemanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos2;
 
-           // Vector3 tmp = GameObject.Find("up").transform.position;
+            // Vector3 tmp = GameObject.Find("up").transform.position;
             //tmp =  transform.TransformPoint(tmp);
 
             //Canvass.transform.parent = up.transform;
@@ -92,7 +100,7 @@ public class MainUIManagerScript : MonoBehaviour
             //GameObject.Find("CanavasPos").transform.position = new Vector3(tmp.x , tmp.y, tmp.z);
 
 
-           // Canvass.transform.position = new Vector3(tmp.x , tmp.y, tmp.z);
+            // Canvass.transform.position = new Vector3(tmp.x , tmp.y, tmp.z);
 
 
             //Canvass.transform.position = up.transform.position;
@@ -100,6 +108,7 @@ public class MainUIManagerScript : MonoBehaviour
 
             //Canvass.transform.parent = null;
 
+            CanvasGroupOnOf(newPausemanu, true);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)||OnTriggerHR /*|| GrabGrip*/)//取りあえずいったんEscapeKeyでManuを開くようにする
@@ -118,92 +127,122 @@ public class MainUIManagerScript : MonoBehaviour
 
         if(OnPause)
         {
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                t += 1;
+                if (t % 2 == 0)
+                {
+                    Restertbutton.Select();
+                    nowButton = 1;
+                    //if (Input.GetKeyDown(KeyCode.B)) ExitPauseManu();
+
+                }
+                else
+                {
+                    backbutton.Select();
+                    nowButton = 2;
+                    //if (Input.GetKeyDown(KeyCode.B)) BackTitle();
+                }
+            }
+
+            if (nowButton == 1)
+            {
+                if (Input.GetKeyDown(KeyCode.B)) ExitPauseManu();
+            }
+            else if (nowButton == 2)
+            {             
+                
+                if (Input.GetKeyDown(KeyCode.B)) BackTitle();
+            }
+
+
             //CanvasGroupOnOf(Pausemanu, true);
             //CanvasGroupOnOf(MainCanvas, false);
 
-            if (GrabGrip || Input.GetKeyDown(KeyCode.Escape))//中に入れる状態で再度押したらfalseになるようにしてみる
-            {
-               // OnTriggerHR = false;
-               // OnPause = false;
-            }
+            //if (GrabGrip || Input.GetKeyDown(KeyCode.Escape))//中に入れる状態で再度押したらfalseになるようにしてみる
+            //{
+            //   // OnTriggerHR = false;
+            //   // OnPause = false;
+            //}
 
 
-            RaycastHit hitObj;
-            Ray ray = new Ray(houki.transform.position, houki.transform.forward);
-            FakeRay.SetActive(true);
-            if (Physics.Raycast(ray, out hitObj))
-            {
-                //Debug.Log(hitObj);
-                //Debug.DrawRay(ray.origin, ray.direction * 15f, Color.green, 5, false);
+            //RaycastHit hitObj;
+            //Ray ray = new Ray(houki.transform.position, houki.transform.forward);
+            //FakeRay.SetActive(true);
+            //if (Physics.Raycast(ray, out hitObj))
+            //{
+            //    //Debug.Log(hitObj);
+            //    //Debug.DrawRay(ray.origin, ray.direction * 15f, Color.green, 5, false);
 
-                if(hitObj.collider.gameObject == null)button = FakeObj.GetComponent<Button>();
+            //    if(hitObj.collider.gameObject == null)button = FakeObj.GetComponent<Button>();
 
-                button = hitObj.collider.gameObject.GetComponent<Button>();
-                button.Select();
+            //    button = hitObj.collider.gameObject.GetComponent<Button>();
+            //    button.Select();
 
-                if (hitObj.collider.gameObject.name == "ExitPauseManu" && TriggerOn /*|| GrabGrip*/&&nowManu == 1)
-                {
-                    nowManu = 0;
-                    OnTriggerHR = false;
-                    ExitPauseManu();
-                    
-                }
+            //    if (hitObj.collider.gameObject.name == "ExitPauseManu" && TriggerOn /*|| GrabGrip*/&&nowManu == 1)
+            //    {
+            //        nowManu = 0;
+            //        OnTriggerHR = false;
+            //        ExitPauseManu();
 
-
-                if (hitObj.collider.gameObject.name == "BackTitle" && TriggerOn /*|| GrabGrip*/&&nowManu == 1)
-                {
-                    nowManu = 0;
-                    BackTitle();
-                }
-
-                if (hitObj.collider.gameObject.name == "GoSoundManu" && TriggerOn /*|| GrabGrip*/&&nowManu == 1)
-                {
-                    nowManu = 2;
-                    PausemanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos1;
-                    SoundmanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos2;
-                    pushSoundButton();
-                }
-
-                if (hitObj.collider.gameObject.name == "GoContllol" && TriggerOn /*|| GrabGrip*/&&nowManu == 1)
-                {
-                    nowManu = 3;
-                    PausemanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos1;
-                    ContllolmanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos2;
-                    pushContllolButton();
-                }
-
-                if (hitObj.collider.gameObject.name == "ExitthisManu" && TriggerOn /*|| GrabGrip*/&&nowManu == 2)
-                {
-                    nowManu = 1;
-                    PausemanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos2;
-                    SoundmanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos1;
-                    BackPauseManu1();
-                }
-
-                if (hitObj.collider.gameObject.name == "ExitCManu" && TriggerOn /*|| GrabGrip*/&&nowManu == 3)
-                {
-                    nowManu = 1;
-                    PausemanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos2;
-                    ContllolmanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos1;
-                    BackPauseManu2();
-                }
-
-                if (hitObj.collider.gameObject.name == "BackTitle1" && TriggerOn /*|| GrabGrip*/)//Finishが関係空いてくる後でやる
-                {
-                    ResultCanvasObj.GetComponent<RectTransform>().anchoredPosition = UIpos2;
-                    PausemanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos1;
-                    BackTitle();
-                }
-
-                if (hitObj.collider.gameObject.name == "ExitResult" && TriggerOn /*|| GrabGrip*/)
-                {
-                    ResultCanvasObj.GetComponent<RectTransform>().anchoredPosition = UIpos1;
-                    PausemanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos2;
-                    ExitResultCanvas();
-                }
+            //    }
 
 
-            }
+            //    if (hitObj.collider.gameObject.name == "BackTitle" && TriggerOn /*|| GrabGrip*/&&nowManu == 1)
+            //    {
+            //        nowManu = 0;
+            //        BackTitle();
+            //    }
+
+            //    if (hitObj.collider.gameObject.name == "GoSoundManu" && TriggerOn /*|| GrabGrip*/&&nowManu == 1)
+            //    {
+            //        nowManu = 2;
+            //        PausemanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos1;
+            //        SoundmanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos2;
+            //        pushSoundButton();
+            //    }
+
+            //    if (hitObj.collider.gameObject.name == "GoContllol" && TriggerOn /*|| GrabGrip*/&&nowManu == 1)
+            //    {
+            //        nowManu = 3;
+            //        PausemanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos1;
+            //        ContllolmanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos2;
+            //        pushContllolButton();
+            //    }
+
+            //    if (hitObj.collider.gameObject.name == "ExitthisManu" && TriggerOn /*|| GrabGrip*/&&nowManu == 2)
+            //    {
+            //        nowManu = 1;
+            //        PausemanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos2;
+            //        SoundmanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos1;
+            //        BackPauseManu1();
+            //    }
+
+            //    if (hitObj.collider.gameObject.name == "ExitCManu" && TriggerOn /*|| GrabGrip*/&&nowManu == 3)
+            //    {
+            //        nowManu = 1;
+            //        PausemanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos2;
+            //        ContllolmanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos1;
+            //        BackPauseManu2();
+            //    }
+
+            //    if (hitObj.collider.gameObject.name == "BackTitle1" && TriggerOn /*|| GrabGrip*/)//Finishが関係空いてくる後でやる
+            //    {
+            //        ResultCanvasObj.GetComponent<RectTransform>().anchoredPosition = UIpos2;
+            //        PausemanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos1;
+            //        BackTitle();
+            //    }
+
+            //    if (hitObj.collider.gameObject.name == "ExitResult" && TriggerOn /*|| GrabGrip*/)
+            //    {
+            //        ResultCanvasObj.GetComponent<RectTransform>().anchoredPosition = UIpos1;
+            //        PausemanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos2;
+            //        ExitResultCanvas();
+            //    }
+
+
+            //}
         }
         else
         {
@@ -216,7 +255,7 @@ public class MainUIManagerScript : MonoBehaviour
             CanvasGroupOnOf(MainCanvas, false);
             ResultCanvasObj.SetActive(true);
             CanvasGroupOnOf(ResultCanvas, true);
-            FakeRay.SetActive(true);
+            //FakeRay.SetActive(true);
         }
 
         
@@ -238,6 +277,9 @@ public class MainUIManagerScript : MonoBehaviour
         CanvasGroupOnOf(MainCanvas, true);
         //PausemanuObj.SetActive(false);
         //MainCanvasObj.SetActive(true);
+        CanvasGroupOnOf(newPausemanu, false);
+        t = 0;
+        nowButton = 0;
         OnPause = false;
         playerVRScript.Move();
         FakeRay.SetActive(false);
