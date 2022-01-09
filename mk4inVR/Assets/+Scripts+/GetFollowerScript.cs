@@ -43,7 +43,7 @@ public class GetFollowerScript : MonoBehaviour
                 quest.setAc_once = true;
                 manager.getFol_B_Flag = true;
                 popupText_SF_B.SetActive(false);
-                other.transform.root.gameObject.SetActive(false);
+                //other.transform.root.gameObject.SetActive(false);
             }
             else if (rootOther.tag == "FollowerC" && manager.itemC_count == 0)
             {
@@ -54,7 +54,7 @@ public class GetFollowerScript : MonoBehaviour
                 quest.setAc_once = true;
                 manager.getFol_C_Flag = true;
                 popupText_SF_C.SetActive(false);
-                other.transform.root.gameObject.SetActive(false);
+                //other.transform.root.gameObject.SetActive(false);
             }
 
         }
