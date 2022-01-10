@@ -7,7 +7,7 @@ public class GameTimerScript : MonoBehaviour
 {
     [SerializeField] ManagerScript manager;
     [SerializeField] FinishAreaScript finish;
-    int GameTime = 0;
+    public int GameTime = 0;
     bool TimerFlag = true;
     string timeText;
     // Start is called before the first frame update
