@@ -7,7 +7,7 @@ public class GameTimerScript : MonoBehaviour
 {
     [SerializeField] ManagerScript manager;
     [SerializeField] FinishAreaScript finish;
-    float GameTime = 0;
+    int GameTime = 0;
     bool TimerFlag = true;
     string timeText;
     // Start is called before the first frame update
@@ -26,7 +26,7 @@ public class GameTimerScript : MonoBehaviour
 
         if (TimerFlag)
         {
-            GameTime += Time.deltaTime;
+            GameTime += (int)Time.deltaTime;
         }
 
         if (finish.OnTriggerFin) timeText = "完了タイム";
