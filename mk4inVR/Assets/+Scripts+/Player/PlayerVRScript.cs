@@ -148,6 +148,16 @@ public class PlayerVRScript : MonoBehaviour
                 AbsoluVecZ *= -1;
             }
 
+            //下降加速の表示切り替え************************************************************************************
+            if (Vec.y <= 3.0f)
+            {
+                manager.accel_on = true;
+            }
+            else
+            {
+                manager.accel_on = false;
+            }
+
             //Debug.Log(" AbsoluVecX = " + AbsoluVecX + " AbsoluVecY = " + AbsoluVecY + " AbsoluVecZ = " + AbsoluVecZ);
 
             /*
