@@ -5,9 +5,9 @@ using UnityEngine;
 public class QuestScript : MonoBehaviour
 {
     //待機中の仲間
-    [SerializeField] private GameObject StayFollower_A = null;
-    [SerializeField] private GameObject StayFollower_B = null;
-    [SerializeField] private GameObject StayFollower_C = null;
+    [SerializeField] private GameObject Follower_A = null;
+    [SerializeField] private GameObject Follower_B = null;
+    [SerializeField] private GameObject Follower_C = null;
 
     //誘導ビーコン
     [SerializeField] private GameObject Beacon_A = null;
@@ -66,21 +66,30 @@ public class QuestScript : MonoBehaviour
         //初回SetActive
         if (manager.itemA_count == 0 && !popBeacon_flag_A)
         {
+            nowQueNum = 1;
             Carsor.SetActive(true);
             Beacon_A.SetActive(true);
             popBeacon_flag_A = true;
+
+            Carsor.transform.LookAt(Follower_A.transform);
         }
         if (manager.itemB_count == 0 && !popBeacon_flag_B)
         {
+            nowQueNum = 2;
             Carsor.SetActive(true);
             Beacon_B.SetActive(true);
             popBeacon_flag_B = true;
+
+            Carsor.transform.LookAt(Follower_B.transform);
         }
         if (manager.itemC_count == 0 && !popBeacon_flag_C)
         {
+            nowQueNum = 3;
             Carsor.SetActive(true);
             Beacon_C.SetActive(true);
             popBeacon_flag_C = true;
+
+            Carsor.transform.LookAt(Follower_C.transform);
         }
 
         //目的地誘導
@@ -93,7 +102,7 @@ public class QuestScript : MonoBehaviour
                     carsorSetAc_flag = true;
                     CarsorSwActive();
 
-                    Carsor.transform.LookAt(StayFollower_A.transform);
+                    Carsor.transform.LookAt(Follower_A.transform);
                 }
                 else if (manager.quest_A_state || !popBeacon_flag_A)
                 {
@@ -111,7 +120,7 @@ public class QuestScript : MonoBehaviour
                     carsorSetAc_flag = true;
                     CarsorSwActive();
 
-                    Carsor.transform.LookAt(StayFollower_B.transform);
+                    Carsor.transform.LookAt(Follower_B.transform);
                 }
                 else if (manager.quest_B_state || !popBeacon_flag_B)
                 {
@@ -129,7 +138,7 @@ public class QuestScript : MonoBehaviour
                     carsorSetAc_flag = true;
                     CarsorSwActive();
 
-                    Carsor.transform.LookAt(StayFollower_C.transform);
+                    Carsor.transform.LookAt(Follower_C.transform);
                 }
                 else if (manager.quest_C_state || !popBeacon_flag_C)
                 {

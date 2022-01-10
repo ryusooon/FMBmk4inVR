@@ -32,6 +32,6 @@ public class GameTimerScript : MonoBehaviour
         if (finish.OnTriggerFin) timeText = "完了タイム";
 
 
-        GetComponent<Text>().text = GameTime.ToString(timeText + "0"+"秒");
+        //GetComponent<Text>().text = GameTime.ToString(timeText + "0"+"秒");
     }
 }

@@ -178,8 +178,8 @@ public class MoveScript : MonoBehaviour
         if (objNum == 2 && manager.getFol_B_Flag) ActiveFlag = true;
         if (objNum == 3 && manager.getFol_C_Flag) ActiveFlag = true;
 
-       // if (ActiveFlag)
-        //{
+        if (ActiveFlag)
+        {
             if (CanDestroyStayState) DestroyObj();
             NavDet = true;
             if (pattern == true)
@@ -206,11 +206,11 @@ public class MoveScript : MonoBehaviour
                 //    rb.AddForce(transform.forward * move_speed, ForceMode.Force);
                 //}
             }
-      //  }
-       // else
-       // {
-        //    this.transform.LookAt(target);
-       // }
+        }
+        else
+        {
+            this.transform.LookAt(target);
+        }
 
         if (Finish.OnTriggerFin)
         {
