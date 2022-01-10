@@ -8,6 +8,11 @@ public class TimeImageScript : MonoBehaviour
     public Sprite[] numimage;
     public List<int> number = new List<int>();
     public GameTimerScript time;
+
+    void Start()
+    {
+        number[0] = 0;
+    }
     public void RandomScore()
     {
         
@@ -38,15 +43,16 @@ public class TimeImageScript : MonoBehaviour
         }
 
         GameObject.Find("TimeImage").GetComponent<Image>().sprite = numimage[number[0]];
+
         for (int i = 1; i < number.Count; i++)
         {
            
-            RectTransform scoreimage = (RectTransform)Instantiate(GameObject.Find("TimeImage")).transform;
-            scoreimage.SetParent(this.transform, false);
-            scoreimage.localPosition = new Vector2(
-                scoreimage.localPosition.x - scoreimage.sizeDelta.x * i,
-                scoreimage.localPosition.y);
-            scoreimage.GetComponent<Image>().sprite = numimage[number[i]];
+            RectTransform timeImage = (RectTransform)Instantiate(GameObject.Find("TimeImage")).transform;
+            timeImage.SetParent(this.transform, false);
+            timeImage.localPosition = new Vector2(
+                timeImage.localPosition.x - timeImage.sizeDelta.x * i,
+                timeImage.localPosition.y);
+            timeImage.GetComponent<Image>().sprite = numimage[number[i]];
         }
     }
 }

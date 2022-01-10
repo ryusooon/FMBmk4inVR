@@ -23,6 +23,7 @@ TagManager:
   - outagesPos
   - Freeza
   - TimeUI
+  - Score
   layers:
   - Default
   - TransparentFX

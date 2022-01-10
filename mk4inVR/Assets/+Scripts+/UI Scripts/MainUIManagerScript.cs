@@ -85,7 +85,7 @@ public class MainUIManagerScript : MonoBehaviour
             UIX = 180;
             //Pausemanu.rectTransform.anchoredPosition(-20, 0, 0);
 
-
+            OnPause = true;
 
             PausemanuObj.GetComponent<RectTransform>().anchoredPosition = UIpos2;
 
@@ -117,7 +117,7 @@ public class MainUIManagerScript : MonoBehaviour
             Debug.Log("Pause押したよ");
             //CanvasGroupOnOf(Pausemanu, true);
             //CanvasGroupOnOf(MainCanvas, false);
-            OnPause = true;
+            //OnPause = true;
 
             //button = PausemanuObj.GetComponent<Button>();
             //button.Select();

@@ -87,6 +87,10 @@ public class PlayerVRScript : MonoBehaviour
     float AccelerationValue = 1.25f;
     bool StopOn;
 
+
+
+    [SerializeField] MainUIManagerScript ui;
+
     private void Start()
     {
         CameraRb = this.gameObject.transform.GetComponent<Rigidbody>();
@@ -149,7 +153,7 @@ public class PlayerVRScript : MonoBehaviour
             }
 
             //下降加速の表示切り替え************************************************************************************
-            if (Vec.y <= 3.0f)
+            if (Vec.y <= 3.0f||ui.OnPause == false)
             {
                 manager.accel_on = true;
             }
